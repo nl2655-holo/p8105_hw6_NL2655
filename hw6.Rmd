@@ -11,7 +11,6 @@ library(tidyverse)
 library(readr)
 library(modelr)
 library(mgcv)
-
 ```
 
 # Problem 1
@@ -84,5 +83,25 @@ cv_df %>%
     names_prefix = "rmse_") %>% 
   mutate(model = fct_inorder(model)) %>% 
   ggplot(aes(x = model, y = rmse)) + geom_violin()
+```
+
+# Problem 2
+
+## data cleaning
+
+```{r}
+set.seed(1551)
+
+weather_df = 
+  rnoaa::meteo_pull_monitors(
+    c("USW00094728"),
+    var = c("PRCP", "TMIN", "TMAX"), 
+    date_min = "2017-01-01",
+    date_max = "2017-12-31") %>%
+  mutate(
+    name = recode(id, USW00094728 = "CentralPark_NY"),
+    tmin = tmin / 10,
+    tmax = tmax / 10) %>%
+  select(name, id, everything())
 ```
 
