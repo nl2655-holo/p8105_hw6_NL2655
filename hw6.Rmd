@@ -12,7 +12,6 @@ library(readr)
 library(modelr)
 library(mgcv)
 
-set.seed(1)
 ```
 
 # Problem 1
@@ -56,6 +55,8 @@ lm_delwt %>%
 ## Compare models
 
 ```{r}
+set.seed(1)
+
 #model check#
 lm_main = lm(bwt ~ blength + gaweeks, data = birthweight)
 lm_int = lm(bwt ~ bhead * blength * babysex, data = birthweight)
