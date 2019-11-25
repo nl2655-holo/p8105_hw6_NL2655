@@ -50,7 +50,8 @@ lm_delwt %>%
   theme_classic()
 ```
 
-*Description*
+*Description* I decede to do a single variable linear model. Therefore, I Making point plots by each potential variables to visual weather there are any corelations between baby birth weight and any other variables. By this way, I choose mother’s weight at delivery as predictor to build the model.
+
 
 ## Compare models
 
@@ -85,6 +86,8 @@ cv_df %>%
   mutate(model = fct_inorder(model)) %>% 
   ggplot(aes(x = model, y = rmse)) + geom_violin()
 ```
+
+*Compare*: from the plot, the one using head circumference, length, sex, and all interactions (including the three-way interaction) between these has the lowest rmse, we can conclude that it is a better model compared to other two models.
 
 # Problem 2
 
@@ -147,5 +150,5 @@ logtime %>%
   theme_bw()
 ```
 
-#Description# 
-by ploting simple linear regression with tmax as the response and tmin as predictor, we can see that the distribution of both log(beta0*beta1) and r_squre can be assumed as normally distributed. and the 2.5% and 97.5% quantiles of log estimation is `r round(quantile(logtime$log, c(0.025, 0.975)), digit=3)` and the 2.5% and 97.5% quantiles of r_square is `r round(quantile(rsq$r_squared, c(0.025, 0.975)), digit=3)`. the quantiles are provided for the confidence interval.
+*Description* :
+by ploting simple linear regression with tmax as the response and tmin as predictor, we can see that the distribution of both log(beta0*beta1) and r_squre can be assumed as normally distributed. and the 2.5% and 97.5% quantiles of log estimation is (`r round(quantile(logtime$log, c(0.025, 0.975)), digit=3)`). and the 2.5% and 97.5% quantiles of r_square is (`r round(quantile(rsq$r_squared, c(0.025, 0.975)), digit=3)`). the quantiles are provided for the confidence interval.

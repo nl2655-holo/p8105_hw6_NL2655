@@ -59,7 +59,11 @@ lm_delwt %>%
 
 ![](hw6_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-*Description*
+*Description* I decede to do a single variable linear model. Therefore,
+I Making point plots by each potential variables to visual weather there
+are any corelations between baby birth weight and any other variables.
+By this way, I choose mother’s weight at delivery as predictor to build
+the model.
 
 ## Compare models
 
@@ -96,6 +100,11 @@ cv_df %>%
 ```
 
 ![](hw6_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+*Compare*: from the plot, the one using head circumference, length, sex,
+and all interactions (including the three-way interaction) between these
+has the lowest rmse, we can conclude that it is a better model compared
+to other two models.
 
 # Problem 2
 
@@ -180,9 +189,9 @@ logtime %>%
 
 ![](hw6_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
 
-\#Description\# by ploting simple linear regression with tmax as the
+*Description* : by ploting simple linear regression with tmax as the
 response and tmin as predictor, we can see that the distribution of both
 log(beta0\*beta1) and r\_squre can be assumed as normally distributed.
-and the 2.5% and 97.5% quantiles of log estimation is 1.966, 2.059 and
-the 2.5% and 97.5% quantiles of r\_square is 0.894, 0.927. the quantiles
-are provided for the confidence interval.
+and the 2.5% and 97.5% quantiles of log estimation is (1.966, 2.059).
+and the 2.5% and 97.5% quantiles of r\_square is (0.894, 0.927). the
+quantiles are provided for the confidence interval.
