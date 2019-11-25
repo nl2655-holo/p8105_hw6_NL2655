@@ -1,23 +1,13 @@
----
-title: "p8105_hw6_NL2655"
-author: "Nankun"
-date: "2019/11/25"
-output: github_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(readr)
-library(modelr)
-library(mgcv)
-```
+p8105\_hw6\_NL2655
+================
+Nankun
+2019/11/25
 
 # Problem 1
 
 ## Data cleaning
 
-```{r}
+``` r
 birthweight =
   read_csv("birthweight.csv") %>% 
   janitor::clean_names() %>% 
@@ -30,14 +20,31 @@ birthweight =
   )
 ```
 
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_double()
+    ## )
+
+    ## See spec(...) for full column specifications.
+
+    ## Warning in FUN(X[[i]], ...): strings not representable in native encoding
+    ## will be translated to UTF-8
+
 ## Building model
 
-```{r}
+``` r
 lm_delwt = lm(bwt ~ delwt, data = birthweight)
 lm_delwt %>% 
   broom::tidy() %>% 
    knitr::kable(digits = 3)
+```
 
+| term        | estimate | std.error | statistic | p.value |
+| :---------- | -------: | --------: | --------: | ------: |
+| (Intercept) | 2147.912 |    49.367 |    43.509 |       0 |
+| delwt       |    6.639 |     0.335 |    19.804 |       0 |
+
+``` r
   birthweight %>%  
   add_residuals(lm_delwt) %>% 
   add_predictions(lm_delwt) %>% 
@@ -50,11 +57,13 @@ lm_delwt %>%
   theme_classic()
 ```
 
+![](hw6_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
 *Description*
 
 ## Compare models
 
-```{r}
+``` r
 set.seed(1)
 
 #model check#
@@ -86,11 +95,13 @@ cv_df %>%
   ggplot(aes(x = model, y = rmse)) + geom_violin()
 ```
 
+![](hw6_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
 # Problem 2
 
 ## data cleaning
 
-```{r}
+``` r
 set.seed(1551)
 
 weather_df = 
@@ -104,7 +115,23 @@ weather_df =
     tmin = tmin / 10,
     tmax = tmax / 10) %>%
   select(name, id, everything())
+```
 
+    ## Registered S3 method overwritten by 'crul':
+    ##   method                 from
+    ##   as.character.form_file httr
+
+    ## Registered S3 method overwritten by 'hoardr':
+    ##   method           from
+    ##   print.cache_info httr
+
+    ## file path:          C:\Users\freew\AppData\Local\rnoaa\rnoaa\Cache/ghcnd/USW00094728.dly
+
+    ## file last updated:  2019-11-25 06:32:28
+
+    ## file min/max dates: 1869-01-01 / 2019-11-30
+
+``` r
 rsq=
   weather_df %>% 
   modelr::bootstrap(n = 5000) %>% 
@@ -120,7 +147,11 @@ rsq %>%
   ggplot(aes(x = r_squared)) + 
   geom_density() + 
   theme_bw()
+```
 
+![](hw6_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+``` r
 logtime=
   weather_df %>% 
   modelr::bootstrap(n = 5000) %>% 
@@ -147,5 +178,11 @@ logtime %>%
   theme_bw()
 ```
 
-#Description# 
-by ploting simple linear regression with tmax as the response and tmin as predictor, we can see that the distribution of both log(beta0*beta1) and r_squre can be assumed as normally distributed. and the 2.5% and 97.5% quantiles of log estimation is `r round(quantile(logtime$log, c(0.025, 0.975)), digit=3)` and the 2.5% and 97.5% quantiles of r_square is `r round(quantile(rsq$r_squared, c(0.025, 0.975)), digit=3)`. the quantiles are provided for the confidence interval.
+![](hw6_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+
+\#Description\# by ploting simple linear regression with tmax as the
+response and tmin as predictor, we can see that the distribution of both
+log(beta0\*beta1) and r\_squre can be assumed as normally distributed.
+and the 2.5% and 97.5% quantiles of log estimation is 1.966, 2.059 and
+the 2.5% and 97.5% quantiles of r\_square is 0.894, 0.927. the quantiles
+are provided for the confidence interval.
